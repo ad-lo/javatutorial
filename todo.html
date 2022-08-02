@@ -1,8 +1,42 @@
-<button>Press me</button>
-<button>Up</button><button>Down</button>
+<html>
+  <head><title>My To Do App</title></head>
+
+  <body>
+    <input type="date"/>
+    <input id="todo-title" type="text"/>
+<button onclick="addTodo()">Add Todo</button>
+
+<div id="todo-list"></div>
+
 <script>
-  let todo1= 'get groceries';
-  let todo2 = 'wash car';
-  let todo3 = 'make dinner';
-console.log ('Chris Sayer');
+ 
+
+const todos = ['Get groceries', 'Wash car', 'Make dinner'];
+
+
+render();
+
+function addTodo() {
+  const textbox = document.getElementById('todo-title');
+  const title = textbox.value;
+  todos.push(title);
+
+render();
+}
+
+
+function render() {
+  // reset our list
+  document.getElementById('todo-list').innerHTML = '';
+
+  todos.forEach(function (todoTitle) {
+  const element = document.createElement('div');
+  element.innerText = todoTitle;
+  const todoList = document.getElementById('todo-list');
+  todoList.appendChild(element);
+});
+}
+
 </script>
+</body>
+</html>
