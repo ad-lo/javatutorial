@@ -2,8 +2,8 @@
   <head><title>My To Do App</title></head>
 
   <body>
-    <input type="date"/>
     <input id="todo-title" type="text"/>
+    <input id="date-picker" type="date"/>
 <button onclick="addTodo()">Add Todo</button>
 
 <div id="todo-list"></div>
@@ -11,7 +11,19 @@
 <script>
  
 
-const todos = ['Get groceries', 'Wash car', 'Make dinner'];
+const todos = [{
+  title:'Get groceries',
+  dueDate: '2021-10-24',
+  id: 'id1'
+}, {
+  title: 'Wash car',
+  dueDate: '2021-02-03',
+  id: 'id2'
+ }, {
+  title:'Make dinner',
+dueDate: '2021-02-22',
+id: 'id3'
+}];
 
 
 render();
@@ -19,19 +31,41 @@ render();
 function addTodo() {
   const textbox = document.getElementById('todo-title');
   const title = textbox.value;
-  todos.push(title);
+  const datePicker = document.getElementById('date-picker');
+  const dueDate = datePicker.value;
+
+  const id = new Date().getTime();
+
+  todos.push({
+    title: title,
+    dueDate: dueDate,
+    id: id
+  });
 
 render();
 }
 
+function deleteTodo() {
+
+}
 
 function render() {
   // reset our list
   document.getElementById('todo-list').innerHTML = '';
 
-  todos.forEach(function (todoTitle) {
+  todos.forEach(function (todo) {
   const element = document.createElement('div');
-  element.innerText = todoTitle;
+  element.innerText = todo.title + ' ' + todo.dueDate;
+
+const deleteButton = document.createElement('button');
+deleteButton.innerText = 'Delete';
+deleteButton.style = 'margin-left: 12px;';
+deleteButton.onclick = deleteTodo;
+deleteButton.id = todo.id;
+element.appendChild(deleteButton);
+
+
+
   const todoList = document.getElementById('todo-list');
   todoList.appendChild(element);
 });
