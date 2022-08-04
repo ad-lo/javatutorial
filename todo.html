@@ -10,7 +10,7 @@
 
 <script>
  
-
+// model
 let todos = [{
   title:'Get groceries',
   dueDate: '2021-10-24',
@@ -25,14 +25,8 @@ dueDate: '2021-02-22',
 id: 'id3'
 }];
 
-
-render();
-
-function addTodo() {
-  const textbox = document.getElementById('todo-title');
-  const title = textbox.value;
-  const datePicker = document.getElementById('date-picker');
-  const dueDate = datePicker.value;
+//create to do
+function createTodo(title, dueDate) {
 
   const id = '' + new Date().getTime();
 
@@ -42,23 +36,19 @@ function addTodo() {
     id: id
   });
 
-render();
 }
+//deletes to do
+render();
 
-function func(){
-  const num1 = 1;
-  const num5 = 5;
+function addTodo() {
+  const textbox = document.getElementById('todo-title');
+  const title = textbox.value;
+  const datePicker = document.getElementById('date-picker');
+  const dueDate = datePicker.value;
 
-  if (num1 < num5) {
-console.log('run this code');
-  } else if (num1 > 100) {
-    console.log('not run');
-  } else if (num1 > 0) {
-    console.log('true');
-  }
-  else {
-console.log('other');
-  }
+  createTodo(title, dueDate);
+
+render();
 }
 
 function deleteTodo(event) {
