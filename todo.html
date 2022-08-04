@@ -11,7 +11,7 @@
 <script>
  
 
-const todos = [{
+let todos = [{
   title:'Get groceries',
   dueDate: '2021-10-24',
   id: 'id1'
@@ -34,7 +34,7 @@ function addTodo() {
   const datePicker = document.getElementById('date-picker');
   const dueDate = datePicker.value;
 
-  const id = new Date().getTime();
+  const id = '' + new Date().getTime();
 
   todos.push({
     title: title,
@@ -45,7 +45,37 @@ function addTodo() {
 render();
 }
 
-function deleteTodo() {
+function func(){
+  const num1 = 1;
+  const num5 = 5;
+
+  if (num1 < num5) {
+console.log('run this code');
+  } else if (num1 > 100) {
+    console.log('not run');
+  } else if (num1 > 0) {
+    console.log('true');
+  }
+  else {
+console.log('other');
+  }
+}
+
+function deleteTodo(event) {
+const deleteButton = event.target;
+const idToDelete = deleteButton.id;
+
+todos = todos.filter(function (todo) {
+  // if the id of this todo matches the idToDelete, return false 
+  // for everything else, return true
+  if (todo.id === idToDelete) {
+    return false;
+  } else {
+      return true;
+    }
+});
+
+render();
 
 }
 
