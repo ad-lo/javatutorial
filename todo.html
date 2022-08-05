@@ -11,7 +11,17 @@
 <script>
  
 // model
-let todos = [{
+// if local storage has todos array, then use it
+// otherwiese use the default array
+let todos;
+
+//retreive localstorage
+const savedTodos = JSON.parse(localStorage.getItem('todos'));
+//check if it's array
+if (Array.isArray(savedTodos)) {
+todos = savedTodos;
+} else {
+  todos = [{
   title:'Get groceries',
   dueDate: '2021-10-24',
   id: 'id1'
@@ -24,6 +34,7 @@ let todos = [{
 dueDate: '2021-02-22',
 id: 'id3'
 }];
+}
 
 //create to do
 function createTodo(title, dueDate) {
@@ -36,28 +47,12 @@ function createTodo(title, dueDate) {
     id: id
   });
 
+  saveTodos();
+
 }
 //deletes to do
-render();
-
-function addTodo() {
-  const textbox = document.getElementById('todo-title');
-  const title = textbox.value;
-  const datePicker = document.getElementById('date-picker');
-  const dueDate = datePicker.value;
-
-  createTodo(title, dueDate);
-
-render();
-}
-
-function deleteTodo(event) {
-const deleteButton = event.target;
-const idToDelete = deleteButton.id;
-
-todos = todos.filter(function (todo) {
-  // if the id of this todo matches the idToDelete, return false 
-  // for everything else, return true
+function remvoeTodo(idToDelete) {
+  todos = todos.filter(function (todo) {
   if (todo.id === idToDelete) {
     return false;
   } else {
@@ -65,10 +60,36 @@ todos = todos.filter(function (todo) {
     }
 });
 
-render();
+saveTodos();
+}
+
+function saveTodos() {
+  localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+
+//controller 
+function addTodo() {
+  const textbox = document.getElementById('todo-title');
+  const title = textbox.value;
+
+  const datePicker = document.getElementById('date-picker');
+  const dueDate = datePicker.value;
+
+  createTodo(title, dueDate);
+  render();
 
 }
 
+function deleteTodo(event) {
+const deleteButton = event.target;
+const idToDelete = deleteButton.id;
+
+remvoeTodo(idToDelete);
+render();
+
+}
+//view
 function render() {
   // reset our list
   document.getElementById('todo-list').innerHTML = '';
@@ -83,8 +104,6 @@ deleteButton.style = 'margin-left: 12px;';
 deleteButton.onclick = deleteTodo;
 deleteButton.id = todo.id;
 element.appendChild(deleteButton);
-
-
 
   const todoList = document.getElementById('todo-list');
   todoList.appendChild(element);
